@@ -416,7 +416,12 @@ document
   function update() {
     idx = Math.max(0, Math.min(idx, total - 1));
     var w = slides[0].getBoundingClientRect().width;
-    track.style.transform = "translateX(-" + idx * w + "px)";
+    var vpW = track.parentElement.getBoundingClientRect().width;
+    var targetTranslate = idx * w - (vpW - w) / 2;
+    var maxTranslate = total * w - vpW;
+    var translateX = Math.max(0, Math.min(targetTranslate, maxTranslate));
+
+    track.style.transform = "translateX(-" + translateX + "px)";
     if (counter) counter.textContent = idx + 1;
     if (totalEl) totalEl.textContent = total;
     prevBtn.disabled = idx === 0;
