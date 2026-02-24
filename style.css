@@ -1,0 +1,494 @@
+/* ── Base ──────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Noto Sans JP", "Inter", sans-serif;
+  color: #1a1a1a;
+  background: #ffffff;
+  letter-spacing: 0.05em;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Scroll-triggered fade-in ─────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children */
+.reveal-child {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.55s ease,
+    transform 0.55s ease;
+}
+
+.reveal-child.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Card hover: subtle float + shadow ── */
+.card-lift {
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(10, 37, 64, 0.07);
+}
+
+/* ── Button hover ─────────────────────── */
+.btn-primary {
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.2s ease;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 4px 20px rgba(10, 37, 64, 0.15);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.btn-ghost:hover {
+  background-color: #0a2540;
+  color: #ffffff;
+  box-shadow: 0 4px 20px rgba(10, 37, 64, 0.12);
+}
+
+/* ── Swipe / Carousel (mobile) ────────── */
+.swipe-row {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  gap: 1rem;
+  padding-bottom: 0.5rem;
+}
+
+.swipe-row::-webkit-scrollbar {
+  display: none;
+}
+
+.swipe-item {
+  scroll-snap-align: center;
+  flex: 0 0 85%;
+  max-width: 85%;
+}
+
+@media (min-width: 768px) {
+  .swipe-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    overflow-x: visible;
+    scroll-snap-type: none;
+    gap: 1.5rem;
+  }
+
+  .swipe-item {
+    flex: none;
+    max-width: none;
+  }
+}
+
+/* Step timeline swipe */
+.step-swipe {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  gap: 0;
+  padding-bottom: 0.5rem;
+}
+
+.step-swipe::-webkit-scrollbar {
+  display: none;
+}
+
+.step-item {
+  scroll-snap-align: center;
+  flex: 0 0 78%;
+  max-width: 78%;
+}
+
+@media (min-width: 768px) {
+  .step-swipe {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    overflow-x: visible;
+    scroll-snap-type: none;
+    gap: 0;
+  }
+
+  .step-item {
+    flex: none;
+    max-width: none;
+  }
+}
+
+/* ── FAQ ──────────────────────────────── */
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition:
+    max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    padding 0.4s ease;
+}
+
+.faq-answer.open {
+  max-height: 400px;
+  padding-top: 0;
+  padding-bottom: 1.25rem;
+}
+
+.faq-icon {
+  transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-icon {
+  transform: rotate(45deg);
+}
+
+/* ── Mobile scroll dots ──────────────── */
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #e5e5e5;
+}
+
+.dot.on {
+  background: #0a2540;
+}
+
+@media (min-width: 768px) {
+  .dots {
+    display: none;
+  }
+}
+
+/* ── Thin divider line ───────────────── */
+.divider {
+  width: 40px;
+  height: 1px;
+  background: #0a2540;
+  margin: 0 auto;
+}
+
+/* ── Hero full-bleed ─────────────────── */
+.hero-bg {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.hero-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(10, 37, 64, 0.92) 0%,
+    rgba(10, 37, 64, 0.72) 45%,
+    rgba(10, 37, 64, 0.35) 100%
+  );
+  z-index: 1;
+}
+
+.hero-bg > img,
+.hero-bg > video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Smartphone mockup ───────────────── */
+.phone-frame {
+  position: relative;
+  width: 240px;
+  height: 490px;
+  background: #111;
+  border-radius: 36px;
+  padding: 10px;
+  box-shadow:
+    0 0 0 2px #333,
+    0 30px 80px rgba(0, 0, 0, 0.45);
+}
+
+@media (min-width: 640px) {
+  .phone-frame {
+    width: 270px;
+    height: 552px;
+  }
+}
+
+.phone-screen {
+  width: 100%;
+  height: 100%;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #000;
+}
+
+.phone-screen video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Notch */
+.phone-notch {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 22px;
+  background: #111;
+  border-radius: 0 0 14px 14px;
+  z-index: 3;
+}
+
+@media (min-width: 640px) {
+  .phone-notch {
+    width: 100px;
+    height: 24px;
+  }
+}
+
+/* ── Animated phone feed ─────────────── */
+.phone-feed-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #fff;
+}
+
+.phone-feed {
+  display: flex;
+  flex-direction: column;
+  animation: feed-scroll 12s linear infinite;
+}
+
+@keyframes feed-scroll {
+  0% {
+    transform: translateY(0);
+  }
+
+  30% {
+    transform: translateY(0);
+  }
+
+  35% {
+    transform: translateY(-33.33%);
+  }
+
+  63% {
+    transform: translateY(-33.33%);
+  }
+
+  68% {
+    transform: translateY(-66.66%);
+  }
+
+  95% {
+    transform: translateY(-66.66%);
+  }
+
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+.phone-post {
+  flex-shrink: 0;
+}
+
+.phone-post-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+}
+
+.phone-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #0a2540;
+  flex-shrink: 0;
+}
+
+.phone-name {
+  width: 60px;
+  height: 8px;
+  border-radius: 4px;
+  background: #ddd;
+  margin-bottom: 4px;
+}
+
+.phone-loc {
+  width: 40px;
+  height: 6px;
+  border-radius: 3px;
+  background: #eee;
+}
+
+.phone-img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.phone-img-icon {
+  width: 32px;
+  height: 32px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.phone-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 12px;
+}
+
+.phone-likes {
+  font-size: 10px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+/* ── Case slider ─────────────────────── */
+.case-slider-viewport {
+  overflow: hidden;
+  position: relative;
+}
+
+.case-slider-track {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.case-slide {
+  flex: 0 0 100%;
+  max-width: 100%;
+  padding: 0 8px;
+}
+
+@media (min-width: 640px) {
+  .case-slide {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding: 0 10px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .case-slide {
+    flex: 0 0 33.3333%;
+    max-width: 33.3333%;
+    padding: 0 12px;
+  }
+}
+
+.case-nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid #e5e5e5;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.2s ease;
+}
+
+.case-nav-btn:hover {
+  background: #0a2540;
+  border-color: #0a2540;
+}
+
+.case-nav-btn:hover svg {
+  stroke: #fff;
+}
+
+.case-nav-btn:active {
+  transform: scale(0.95);
+}
+
+.case-nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  background: #fff;
+  border-color: #e5e5e5;
+}
+
+.case-nav-btn:disabled:hover {
+  background: #fff;
+  border-color: #e5e5e5;
+}
+
+.case-nav-btn:disabled:hover svg {
+  stroke: #6b7280;
+}
+
+/* Progress bar */
+.case-progress-track {
+  width: 100%;
+  height: 2px;
+  background: #e5e5e5;
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.case-progress-bar {
+  height: 100%;
+  background: #0a2540;
+  border-radius: 1px;
+  transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
